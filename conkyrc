@@ -1,0 +1,86 @@
+background no
+imlib_cache_size 0
+font Sans:size=8
+#xftfont Sans:size=10
+use_xft yes
+xftalpha 0.9
+update_interval 3.0
+total_run_times 0
+own_window yes
+own_window_type normal
+own_window_transparent yes
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+double_buffer yes
+minimum_size 220 10
+maximum_width 240
+draw_shades yes
+draw_outline no
+draw_borders no
+draw_graph_borders yes
+default_color white
+default_shade_color black
+default_outline_color green
+alignment bottom_left
+gap_x 12
+gap_y 25
+no_buffers yes
+uppercase no
+cpu_avg_samples 2
+override_utf8_locale no
+uppercase yes # set to yes if you want all text to be in uppercase
+
+TEXT
+${color white}SYSTEM ${hr 1}${color}
+
+Hostname: $alignr$nodename
+Kernel: $alignr$kernel
+Uptime: $alignr$uptime
+Temp: ${alignr}${execi 60 sensors |perl -ne 'print $1 if /id 0:  (.*)°C  \(/'}C
+
+CPU: ${alignr}${freq} MHz
+Processes: ${alignr}$processes ($running_processes running)
+Load: ${alignr}$loadavg
+
+CPU
+${cpubar 4 cpu}
+CPU1 ${alignr}${cpu cpu1}%
+CPU2 ${alignr}${cpu cpu2}%
+CPU3 ${alignr}${cpu cpu3}%
+CPU4 ${alignr}${cpu cpu4}%
+
+Ram ${alignr}$mem / $memmax ($memperc%)
+${membar 4}
+#swap ${alignr}$swap / $swapmax ($swapperc%)
+#${swapbar 4}
+
+Highest CPU $alignr CPU% MEM%
+${top name 1}$alignr${top cpu 1}${top mem 1}
+${top name 2}$alignr${top cpu 2}${top mem 2}
+${top name 3}$alignr${top cpu 3}${top mem 3}
+
+Highest MEM $alignr CPU% MEM%
+${top_mem name 1}$alignr${top_mem cpu 1}${top_mem mem 1}
+${top_mem name 2}$alignr${top_mem cpu 2}${top_mem mem 2}
+${top_mem name 3}$alignr${top_mem cpu 3}${top_mem mem 3}
+
+${color white}Filesystem ${hr 1}${color}
+
+Root/Home: ${alignr}${fs_free /} / ${fs_size /}
+${fs_bar 4 /}
+#Home: ${alignr}${fs_free /home} / ${fs_size /home}
+#${fs_bar 4 /home}
+storage: ${alignr}${fs_free /media/storage} / ${fs_size /media/storage}
+${fs_bar 4 /media/storage}
+
+${color white}NETWORK ${hr 1}${color}
+
+Down ${downspeed eth0} k/s ${alignr}Up ${upspeed eth0} k/s
+${downspeedgraph eth0 25,107} ${alignr}${upspeedgraph eth0 25,107}
+Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
+
+${color white}WEATHER ${hr 1}${color}
+${iconv_start UTF-8 ISO_8859-2}
+${image /tmp/c-weather.png -p 0,610}                   Gdansk: ${execi 1800 curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Gdansk&day=today&weather=1' |perl -ne 'print $1 if /"tempr":"(.[0-9]*)"/'} °C
+${iconv_stop}
+${execi 1800 wget -q -O /tmp/c-weather.png `curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Gdansk&day=today&weather=1' |perl -ne 'if(/"icon":"(.+png)"/){$a = $1; $a=~s/\\\//g; print $a; }'`}
+
