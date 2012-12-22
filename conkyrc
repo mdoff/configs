@@ -80,7 +80,7 @@ Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
 
 ${color white}WEATHER ${hr 1}${color}
 ${iconv_start UTF-8 ISO_8859-2}
-${image /tmp/c-weather.png -p 0,610}                   Gdansk: ${execi 1800 curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Gdansk&day=today&weather=1' |perl -ne 'print $1 if /"tempr":"(.[0-9]*)"/'} °C
+${image /tmp/c-weather.png -p 0,610}                   Bydgoszcz: ${execi 1800 curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Bydgoszcz&day=today&weather=1' |perl -ne 'print $1 if /"tempr":([^"]+),/'} °C
 ${iconv_stop}
-${execi 1800 wget -q -O /tmp/c-weather.png `curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Gdansk&day=today&weather=1' |perl -ne 'if(/"icon":"(.+png)"/){$a = $1; $a=~s/\\\//g; print $a; }'`}
+${execi 1800 wget -q -O /tmp/c-weather.png `curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Chojnice&day=today&weather=1' |perl -ne 'if(/"icon":"(.+png)"/){$a = $1; $a=~s/\\\//g; print $a; }'`&}
 
