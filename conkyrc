@@ -1,4 +1,6 @@
 background no
+own_window_argb_visual yes
+own_window_argb_value 255
 imlib_cache_size 0
 font Sans:size=8
 #xftfont Sans:size=10
@@ -74,13 +76,13 @@ ${fs_bar 4 /media/storage}
 
 ${color white}NETWORK ${hr 1}${color}
 
-Down ${downspeed eth0} k/s ${alignr}Up ${upspeed eth0} k/s
-${downspeedgraph eth0 25,107} ${alignr}${upspeedgraph eth0 25,107}
-Total ${totaldown eth0} ${alignr}Total ${totalup eth0}
+Down ${downspeed wlan0} k/s ${alignr}Up ${upspeed wlan0} k/s
+${downspeedgraph wlan0 25,107} ${alignr}${upspeedgraph wlan0 25,107}
+Total ${totaldown wlan0} ${alignr}Total ${totalup wlan0}
 
 ${color white}WEATHER ${hr 1}${color}
 ${iconv_start UTF-8 ISO_8859-2}
-${image /tmp/c-weather.png -p 0,610}                   Bydgoszcz: ${execi 1800 curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Bydgoszcz&day=today&weather=1' |perl -ne 'print $1 if /"tempr":([^"]+),/'} °C
+${image /tmp/c-weather.png -p 0,610}                   Bydgoszcz: ${execi 1800 curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Bydgoszcz&day=today&weather=1' |perl -ne 'print $1 if /"tempr":([^,]+),/'} °C
 ${iconv_stop}
-${execi 1800 wget -q -O /tmp/c-weather.png `curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Chojnice&day=today&weather=1' |perl -ne 'if(/"icon":"(.+png)"/){$a = $1; $a=~s/\\\//g; print $a; }'`&}
+${execi 1800 wget -q -O /tmp/c-weather.png `curl -s 'http://www.meteoprog.pl/pl/informerget/?type=39&city\[\]=Bydgoszcz&day=today&weather=1' |perl -ne 'if(/"icon":"(.+png)"/){$a = $1; $a=~s/\\\//g; print $a; }'`&}
 
