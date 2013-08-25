@@ -1,0 +1,5 @@
+#!/bin/bash
+vol=$((amixer get Master | grep 'Front Right:' |   cut -d ' ' -f 6) )
+vol=`expr $vol + 1500`
+#echo $vol
+amixer cset iface=MIXER,name="Master Playback Volume" $vol 

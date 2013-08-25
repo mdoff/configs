@@ -1,0 +1,121 @@
+#begin mplayer
+#begin
+#button = volume_up       #VOLUME_UP is the string defined in /etc/lirc/lircd.conf
+#prog = mplayer            
+#config = volume 1         #this is mplayers internal command, see "mplayer -input cmdlist" for more
+#end
+
+#begin
+#button = volume_down
+#prog = mplayer
+#config = volume -1
+#end
+
+begin
+button = seek_forward
+prog = mplayer
+config = seek +1
+end
+
+begin
+button = seek_backward
+prog = mplayer
+config = seek -1
+end
+
+begin
+button = UP
+prog = mplayer
+config = seek +50
+end
+
+begin
+button = DOWN
+prog = mplayer
+config = seek -50
+end
+
+begin
+button = play
+prog = mplayer
+config = pause
+end
+
+begin
+button = pause
+prog = mplayer
+config = pause 
+end
+
+begin
+button = stop
+prog = mplayer
+config = stop 
+end
+ 
+
+begin
+button = video
+prog = mplayer
+config = vo_fullscreen
+end
+
+
+#show elapse/total time in the upper left corner
+#Source: http://prasinos.eu/articles/mplayer-lirc-elapsed-time
+begin
+button = text
+prog = mplayer
+config = osd_show_property_text "${time_pos} / ${length}"
+end
+#mplayer
+#end 
+
+begin irexec
+begin
+prog = irexec
+button = pause
+config = bash /home/mdoff/bin/pause 
+end 
+
+begin
+prog = irexec
+button = track_next
+config = bash /home/mdoff/bin/next
+end 
+
+
+begin
+prog = irexec
+button = track_previous
+config = bash /home/mdoff/bin/prev
+end 
+
+begin
+prog = irexec
+button = red
+config = bash /home/mdoff/bin/unlock 
+end
+
+begin
+prog = irexec
+button = power
+config = bash /home/mdoff/bin/suspend
+end
+
+begin
+prog = irexec
+button = volume_up
+config = bash /home/mdoff/bin/vol_up
+end
+
+begin
+prog = irexec
+button = volume_down
+config = bash /home/mdoff/bin/vol_down
+end
+
+
+
+
+end irexec

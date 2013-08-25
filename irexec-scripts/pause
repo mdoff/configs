@@ -1,0 +1,2 @@
+#!/bin/bash
+a=`ps -e |grep mplayer |wc -c`; if [ 1 -gt $a ] ; then  xte 'keydown Alt_L' 'key p' 'keyup Alt_L'; fi
